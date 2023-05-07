@@ -53,7 +53,7 @@ object DarkSugars extends App {
   // answer: scala spec => last char decides associativity of method
   1 :: 2 :: 3 :: List(4, 5)
   // ==
-  List(4 ,5).::(3).::(2).::(1)
+  List(4, 5).::(3).::(2).::(1)
 
   class MyStream[T] {
     // note the ':' after arrow, it tells to the compile that the last expression will be evaluated first
@@ -73,10 +73,12 @@ object DarkSugars extends App {
 
   // #5: Infix types
   class Composite[A, B]
+
   val composite: Composite[Int, String] = ???
   val otherComposite: Int Composite String = ???
 
   class -->[A, B]
+
   val towards: Int --> String = ???
 
   // # 6: update() is very special, much like apply()
@@ -88,12 +90,15 @@ object DarkSugars extends App {
   // #7: setters for mutable containers
   class Mutable {
     private var internalMember: Int = 0 // private for OO encapsulation
+
     def member = internalMember // "getter"
-    def member_=(value: Int):Unit =
+
+    def member_=(value: Int): Unit =
       internalMember = value // "setter"
   }
 
   val mutableContainer = new Mutable
 
   mutableContainer.member = 42 // rewritten as  mutableContainer.member_=(42)
+
 }
