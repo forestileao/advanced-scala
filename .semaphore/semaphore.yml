@@ -10,4 +10,19 @@ blocks:
       jobs:
         - name: 'Job #1'
           commands:
-            - checkout
+            - echo "test"
+  - name: 'Block #2'
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - echo "test"
+  - name: 'Block #3'
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - echo "test"
+        - name: 'Job #2'
+          commands:
+            - echo "test"
