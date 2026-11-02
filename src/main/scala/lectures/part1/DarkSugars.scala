@@ -101,4 +101,16 @@ object DarkSugars extends App {
 
   mutableContainer.member = 42 // rewritten as  mutableContainer.member_=(42)
 
+  // #8: unary prefix operators
+  // only -, +, ~ and ! are allowed as prefix operators
+  class Flag(val value: Boolean) {
+    def unary_- : Flag = new Flag(!value) // -flag is rewritten as flag.unary_-
+    def unary_! : Flag = new Flag(!value) // !flag is rewritten as flag.unary_!
+  }
+
+  val flag = new Flag(true)
+  val negated = -flag // rewritten as flag.unary_-
+  val inverted = !flag // rewritten as flag.unary_!
+  println(negated.value)
+
 }
