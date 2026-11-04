@@ -1,41 +1,31 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-repos=(
-  "/home/node/repo"
-  "/home/node/context/forestileao/bd_games"
-)
-required=(
-  "^# AGENTS.md$"
-  "^## 1) Purpose$"
-  "^## 2) Repo Structure$"
-  "^## 3) Conventions$"
-  "^## 4) Build & Run$"
-  "^## 5) Tasks$"
-  "^## 6) Safety$"
-  "^## 7) Review$"
-)
-
-pass=true
-for r in ""; do
-  file="/AGENTS.md"
-  if [[ ! -f "" ]]; then
+check_repo() {
+  r=""
+  f="/AGENTS.md"
+  if [ ! -f "" ]; then
     echo "[FAIL] Missing: "
-    pass=false
-    continue
+    return 1
   fi
-  missing=0
-  for rx in ""; do
-    if ! grep -Eq "" ""; then
-      echo "[FAIL]  missing heading: "
-      missing=1
-    fi
-  done
-  if [[  -eq 0 ]]; then
+  ok=1
+  grep -Eq "^# AGENTS.md$" "" || { echo "[FAIL]  missing heading: ^# AGENTS.md$"; ok=0; }
+  grep -Eq "^## 1) Purpose$" "" || { echo "[FAIL]  missing heading: ^## 1) Purpose$"; ok=0; }
+  grep -Eq "^## 2) Repo Structure$" "" || { echo "[FAIL]  missing heading: ^## 2) Repo Structure$"; ok=0; }
+  grep -Eq "^## 3) Conventions$" "" || { echo "[FAIL]  missing heading: ^## 3) Conventions$"; ok=0; }
+  grep -Eq "^## 4) Build & Run$" "" || { echo "[FAIL]  missing heading: ^## 4) Build & Run$"; ok=0; }
+  grep -Eq "^## 5) Tasks$" "" || { echo "[FAIL]  missing heading: ^## 5) Tasks$"; ok=0; }
+  grep -Eq "^## 6) Safety$" "" || { echo "[FAIL]  missing heading: ^## 6) Safety$"; ok=0; }
+  grep -Eq "^## 7) Review$" "" || { echo "[FAIL]  missing heading: ^## 7) Review$"; ok=0; }
+  if [  -eq 1 ]; then
     echo "[OK]  contains all required sections"
+    return 0
   else
-    pass=false
+    return 1
   fi
-done
+}
 
- && exit 0 || exit 1
+pass=0
+check_repo "/home/node/repo" || pass=1
+check_repo "/home/node/context/forestileao/bd_games" || pass=1
+exit 
